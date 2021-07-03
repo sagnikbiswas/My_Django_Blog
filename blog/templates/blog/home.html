@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+
 {% block content %}
     {% for post in posts %}
     <article class="media content-section">
@@ -10,7 +11,7 @@
           </div>
           <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
           {% if post.author.is_superuser %}
-            <p class="article-content">{{ post.content|truncatewords_html:50|safe }}</p>
+            <p class="article-content">{{ post.content|truncatewords_html:50|truncatechars:256 }}</p>
           {% else %}
             <p class="article-content">{{ post.content|truncatewords_html:32|truncatechars:256 }}</p>
           {% endif %}
