@@ -1,8 +1,18 @@
 {% extends "blog/base.html" %}
 {% block content %}
+<div class="article-metadata">
     <h1>About</h1>
+    {% if user.is_superuser %}
+    <a href="{% url 'about_update' %}" class="btn btn-secondary btn-sm mt-1 mb-1">Update</a>
+    {% endif %}
+</div>
+     
+    {% if about_details %}
+    {{about_details.html_content | safe}}
+    {% else %} 
     <p>A Django blog website created following Corey M Schafer's tutorial series.</p>
     <p>Contact me @ <a href="mailto:sagnikbiswas.official@gmail.com">sagnikbiswas.official@gmail.com</a></p>
+    {% endif %}
 
 {% endblock content %}
 

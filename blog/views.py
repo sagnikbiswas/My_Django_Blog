@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
-from .models import Post
+from .models import About, Post
 
 
 def home(request):
@@ -68,4 +68,18 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 def about(request):
-    return render(request, 'blog/about.html', {'title': 'about'})
+    context = {
+        'about_details': About.objects.first(),
+        'title': 'about'
+        }
+    return render(request, 'blog/about.html', context)
+
+class AboutCreateUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = About
+    fields = ['html_content']
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+    def get_object(self):
+        return About.objects.first()

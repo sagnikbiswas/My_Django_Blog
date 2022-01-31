@@ -19,3 +19,6 @@ class Post(models.Model):
 
 class About(models.Model):
     html_content = models.TextField()
+
+    def get_absolute_url(self):
+        return reverse('blog_about')
